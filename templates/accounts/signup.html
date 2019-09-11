@@ -1,0 +1,26 @@
+{% extends "commons/account_base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% block title %}メール登録{% endblock %}
+{% block content %}
+<form action="" method="POST">
+
+    {% csrf_token %}
+  <div class ="text-center col-lg-4 mx-auto col-md-6 col-sm-7 col-8">
+    {{ form.non_field_errors }}
+     <small class="text-muted">※ユーザーネームはアルファベットと数字のみです。</small>
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+
+        {{ field }}
+        {{ field.errors }}
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-light">送信</button>
+  </div>
+</form>
+{% endblock %}

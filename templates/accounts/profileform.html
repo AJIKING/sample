@@ -1,0 +1,28 @@
+{% extends "commons/account_base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% block title %}プロフィールフォーム{% endblock %}
+{% block content %}
+<form method="POST" action="">
+  <div class ="text-center col-lg-7 mx-auto col-md-6 col-sm-7 col-8">
+    {% csrf_token %}
+    <div class="form-group">
+    {{form.first_name.label_tag}}
+    {{form.first_name}}
+      </div>
+    <div class="form-group">
+    {{form.last_name.label_tag}}
+    {{form.last_name}}
+    </div>
+      <div class="form-group">
+    {{form.birthday.label_tag}}
+    {{form.birthday}}
+      </div>
+    <input class="btn btn-light" type="submit" value="submit">
+  </div>
+</form>
+
+{% endblock %}

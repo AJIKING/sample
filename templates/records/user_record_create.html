@@ -1,0 +1,60 @@
+{% extends "commons/base.html" %}
+{% load static %}
+
+{% block title %}記録作成{% endblock %}
+
+{% block headertitle %} RECORDS{% endblock %}
+{% block link %} <link rel="stylesheet" href="{% static 'records/css/user_record_create.css' %}">{% endblock %}
+{% block content %}
+{{ form.media }}
+<h1 class="h4 lead font-weight-bold">レコードのタイトルを作成しよう！</h1>
+<div class="border-top mt-3">
+  <div class="mt-2 form-group text-center">
+<form method="post" action="{% url 'records:title_create' %}">
+  {% csrf_token %}
+  <div class="form-group">
+  {{ title_create }}
+  </div>
+  <input class="btn btn-light mt-3" type="submit" value="作成">
+</form>
+    </div>
+</div>
+
+<div class="mt-4">
+<h1 class="h4 lead font-weight-bold">レコードを投稿しよう！</h1>
+<div class="border-top mt-3">
+  <div class="mt-2 form-group text-center">
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+
+
+{{form.user_record_image.label_tag}}
+  <div class="custom-file form-group">
+  {{form.user_record_image}}
+</div>
+
+  <div class="form-group">
+    {{form.user_record_title.label}}
+    {{form.user_record_title}}
+    </div>
+  <div class="form-group">
+    {{form.user_record_content.label_tag}}<small class="text-muted">※入力してね！</small>
+    {{form.user_record_content}}
+  </div>
+  <div class="form-group">
+    {{form.user_record_elapsed_time.label_tag}}<small class="text-muted">※入力してね！</small>
+    {{form.user_record_elapsed_time}}
+    </div>
+  <div class="form-group">
+    {{form.user_record_time.label_tag}}
+    {{form.user_record_time}}
+  </div>
+    <input class="btn btn-light mt-3" type="submit" value="投稿">
+</form>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

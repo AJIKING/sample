@@ -1,0 +1,65 @@
+{% extends "commons/base.html" %}
+
+{% block title %}アカウント{% endblock %}
+
+{% block headertitle %} ACCOUNTS{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+  		<div class="col-lg-4 col-sm-4 text-center">
+        <img class="rounded-circle" src="{{ image.url }}" alt="Generic placeholder image" width="140" height="140">
+      </div>
+
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-md-8">
+            <h1 class="h3">{{ username }}</h1>
+            <h2 class="h5 mx-auto">投稿{{ count }}件</h2>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-md-3 col-sm-4">
+              {% if username == user.username %}
+            <button type="button" onclick="location.href='{% url 'accounts:edit' %}'" class="btn btn-light text-right">プロフィールを編集する</button>
+            {% endif %}
+            </div>
+            <div class="col-md-9">
+              <h2>{{ group }}</h2>
+            </div>
+          </div>
+        <div class="row">
+        </div>
+      </div>
+    </div>
+
+{% for item in object_list %}
+{% if forloop.counter|add:"-1"|divisibleby:"2" or forloop.first %}
+  <div class="row">
+{% endif %}
+    <div class=" col-lg-6 col-md-12 mt-5 col-sm-12">
+      <div class="card mx-auto">
+        <img class="card-img-top" height="180" src="{{ item.user_record_image.url }}" alt="Card image cap">
+        <div class="card-body text-center">
+         <a class="btn text-dark" href="{% url 'records:record_detail' item.id %}">
+          <h4 class="card-title">{{ item.user_record_content }}</h4>
+           {% if item.user_record_title  %}
+              <p class="card-text">{{ item.user_record_title }}</p>
+              {% endif %}
+           </a>
+        </div>
+      </div><!-- /.col-lg-4 -->
+    </div>
+
+
+    {% if forloop.counter|divisibleby:"2" or forloop.last %}
+  </div>
+{% endif %}
+  {% endfor %}
+{% if user.is_authenticated %}
+
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

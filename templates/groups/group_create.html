@@ -1,0 +1,42 @@
+{% extends "commons/base.html" %}
+{% load static %}
+
+{% block title %}記録作成{% endblock %}
+
+{% block headertitle %} RECORDS{% endblock %}
+    {% block link %}<link rel="stylesheet" href="{% static 'groups/css/createform.css' %}">{% endblock %}
+{% block content %}
+<h1 class="h4 lead font-weight-bold">グループの作成</h1>
+<small>グループ作成は作成したグループの所属になるため申請は出せなくなります。</small>
+<div class="border-top mt-3">
+  <div class="mt-2 form-group text-center">
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+{% if messages %}
+        {% for message in messages %}
+        <p> {{ message }}</p>
+        {% endfor %}
+{% endif %}
+<div class="form-group">
+  {{ form.group_id.errors }}
+  {{form.group_id.label_tag}}
+    {{form.group_id}}
+  </div>
+  <div class="form-group">
+    {{ form.group_name.errors }}
+    {{form.group_name.label_tag}}
+    {{form.group_name}}
+</div>
+  <div class="form-group">
+    {{ form.group_image.errors }}
+    {{form.group_image.label_tag}}
+    {{form.group_image}}
+    </div>
+    <input class="btn btn-light mt-4" type="submit" value="作成">
+</form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

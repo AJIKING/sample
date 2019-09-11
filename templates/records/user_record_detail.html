@@ -1,0 +1,40 @@
+{% extends "commons/base.html" %}
+{% load static %}
+
+{% block title %}メニュー{% endblock %}
+
+{% block headertitle %}{% endblock %}
+
+{% block link %}<link rel="stylesheet" href="{% static 'records/css/detail.css' %}">{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+        <!-- Three columns of text below the carousel -->
+        <div class=" mt-5 mx-auto">
+          <div class="card">
+            <div class="d-inline-block">
+            <h1 class="h3 font-weight-normal d-inline-block">{{ userrecordcontent.user }}</h1>
+              {% if userrecordcontent.user == user %}
+            <a class="text-dark d-inline-block float-right " href="{% url 'records:record_detail_edit' userrecordcontent.id %}"><i class="fas fa-cogs d-inline"></i></a>
+              {% endif %}
+            </div>
+            <img class="card-img-top img-fluid " style="width: 100%; height: 50%;" src="{{ userrecordcontent.user_record_image.url }}" alt="Generic placeholder image" >
+             
+
+            <div class="card-body text-center">
+
+
+              <p>{{ userrecordcontent.user_record_content }}</p>
+              {% if userrecordcontent.user_record_title  %}
+              <p>{{ userrecordcontent.user_record_title }}</p>
+              {% endif %}
+              <small class="text-muted">{{ userrecordcontent.user_record_elapsed_time }}</small>
+              <small class="text-muted">{{ userrecordcontent.user_record_time }}</small>
+              </div>
+          </div><!-- /.col-lg-4 -->
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

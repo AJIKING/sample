@@ -1,0 +1,36 @@
+{% extends "commons/account_base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+{% block title %}Login{% endblock %}
+{% block link %}<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">{% endblock %}
+
+{% block content %}
+<div class="text-center">
+<form class="form-signin" action="" method="POST">
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      {% csrf_token %}
+      {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      {{ form.username.label }}
+      {{ form.username }}
+      {{ form.password.label }}
+      {{ form.password }}
+      <div class="checkbox mb-3">
+        <a class="btn text-dark" href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
+        <a class="btn text-dark" href="{% url 'accounts:signup' %}">アカウント作成</a>
+      </div>
+      <button  type="submit" class="fadeIn fourth btn btn-light">ログイン</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+    <p class="mt-5 mb-3 text-muted"><a class=" text-dark" href="{% url 'person:agreement' %}">利用規約</a></p>
+      <p class="mt-5 mb-3 text-muted">&copy; 2019-2020</p>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block extrajs %}{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "commons/base.html" %}
+{% load static %}
+{% block title %}メニュー{% endblock %}
+
+{% block headertitle %} MEMBERS{% endblock %}
+
+{% block content %}
+<div class="container marketing renewlist" role="main">
+  <div class="">
+  <div class="mb-4 border-bottom">
+    <h1 class="h4 lead font-weight-bold">members</h1>
+      </div>
+  <div class="">
+
+        {% for item in  approval %}
+        {% if forloop.counter|add:"-1"|divisibleby:"4" or forloop.first %}
+        <div class="row">
+        {% endif %}
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mx-auto">
+            <div class="text-center">
+            <a class="btn text-dark" href="{% url 'person:myaccount' username=item.user %}" role="button">
+              <img class="rounded-circle" src="{{ item.user_image.url }}" alt="Generic placeholder image" width="140" height="140">
+            <div class="card-body">
+              <h2>{{ item.user }}</h2>
+            {% if item.position %}
+                 {{ item.position }}
+                {% endif %}
+            {% if item.sports_position %}
+                    {{ item.suports_position }}
+                {% endif %}
+            {% if item.school_year %}
+                    {{ item.school_year }}
+                {% endif %}
+              </div>
+              </a>
+            </div>
+          </div>
+          {% if forloop.counter|divisibleby:"4" or forloop.last %}
+        </div>
+        {% endif %}
+          {% endfor %}
+    </div>
+</div>
+  <div class="">
+    <div class="mb-4 border-bottom">
+    <h1 class="h4 lead font-weight-bold">approval</h1>
+      <small>承認後の取り消しはできませんのでご注意ください。</small>
+      </div>
+<div class="">
+          {% for item in  unapproved %}
+          {% if forloop.counter|add:"-1"|divisibleby:"4" or forloop.first %}
+        <div class="row">
+        {% endif %}
+
+          <div class="col-lg-3 col-md-4 col-sm-6 mx-auto">
+            <div class="text-center">
+            <a class="btn text-dark" href="{% url 'person:myaccount' username=item.user %}" role="button">
+              <img class="rounded-circle" src="{{ item.image.url }}" alt="Generic placeholder image" width="140" height="140">
+            <div class="card-body">
+              <h2>{{ item.user }}</h2>
+            {% if item.position %}
+                 {{ item.position }}
+                {% endif %}
+            {% if item.sports_position %}
+                    {{ item.suports_position }}
+                {% endif %}
+            {% if item.school_year %}
+                    {{ item.school_year }}
+                {% endif %}
+              </div>
+              </a>
+              <form action="{% url 'person:member_approval' %}" method="post">
+                {% csrf_token %}
+                <input hidden name="user" value="{{ item.user }}">
+              <button class="btn btn-light" >承認する</button>
+              </form>
+            </div>
+          </div>
+          {% if forloop.counter|divisibleby:"4" or forloop.last %}
+        </div>
+        {% endif %}
+          {% endfor %}
+
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'person/js/member_approval.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="description" content="部活がこんなに楽しく!?●●を使って部活を快適に楽しもう！">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+
+  <link rel="stylesheet" href="{% static 'commons/css/account_base.css' %}">
+    {% block link %}{% endblock %}
+    </head>
+
+<body>
+
+<div class="container mb-5" role="main">
+{% block content %}{% endblock %}
+</div>
+
+{% block extrajs %}{% endblock %}
+
+</body>
+</html>

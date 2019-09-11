@@ -1,0 +1,36 @@
+{% extends 'commons/base.html' %}
+{% load static %}
+{% block title %}group{% endblock %}
+{% block headertitle %} GROUPS{% endblock %}
+{% block content %}
+
+	{% for group in group_detail %}
+  {% if forloop.counter|add:"-1"|divisibleby:"2" or forloop.first %}
+  <div class="row">
+        {% endif %}
+    <div class="col-lg-6 col-md-12 mt-5 col-sm-12  mx-auto">
+          <div class="card">
+            <img class="card-img-top" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="160">
+            <div class="card-body text-center">
+	<form action='' method="POST">
+		{% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal lead">{{ group.group_name }}</h1>
+        <small class="text-muted">{{ group.school_name }}</small>
+        <small class="text-muted">{{ group.prefecture }}</small>
+  <div class="form-group mt-3">
+    <button type="button" class="btn btn-light w-25  mx-2" onclick="location.href='{% url 'groups:group_detail' group.id %}'" >詳細へ</button>
+    <button type="submit" class="btn btn-light w-25  mx-2">申請する</button>
+    </div>
+	</form>
+               </div>
+          </div><!-- /.col-lg-4 -->
+    </div>
+        {% if forloop.counter|divisibleby:"2" or forloop.last %}
+        </div>
+         {% endif %}
+	{% endfor %}
+{% endblock %}
+
+
+{% block extrajs %}
+{% endblock %}

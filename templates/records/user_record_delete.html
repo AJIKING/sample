@@ -1,0 +1,17 @@
+{% extends "commons/base.html" %}
+{% load static %}
+
+{% block title %}プロフィールフォーム{% endblock %}
+{% block content %}
+<form method="POST" action="">
+  <div class ="text-center col-lg-7 mx-auto col-md-6 col-sm-7 col-8">
+    {% csrf_token %}
+    <div class="form-group">
+    <p>本当に "{{ object }}" を削除しますか?</p>
+      </div>
+
+    <input class="btn btn-light" type="submit" value="submit">
+  </div>
+</form>
+
+{% endblock %}

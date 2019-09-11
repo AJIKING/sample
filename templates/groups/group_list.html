@@ -1,0 +1,93 @@
+{% extends 'commons/base.html' %}
+{% load static %}
+{% load groups_extras %}
+{% block title %}group{% endblock %}
+{% block headertitle %} GROUPS{% endblock %}
+{% block content %}
+
+<div class="border-bottom">
+  <div>
+    <h1 class="h3 font-weight-bold">グループに所属しよう！</h1>
+    <small>所属できるグループは一つです。</small>
+  </div>
+    <div class="text-right mb-2">
+        <a class="btn btn-light " href="{% url 'groups:group_create' %}" role="button">グループ新規作成</a>
+    </div>
+</div>
+
+	{% for group in group_list %}
+  {% if forloop.counter|add:"-1"|divisibleby:"2" or forloop.first %}
+  <div class="row">
+        {% endif %}
+    <div class="col-lg-6 col-md-12 mt-5 col-sm-12  mx-auto">
+          <div class="card">
+            <img class="card-img-top" src="{{ group.group_image.url }}" alt="Generic placeholder image" width="140" height="160">
+            <div class="card-body text-center">
+	<form action="" class = "form_cancel" data-group="{{group.id}}" method="POST">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+        <h1 class="h3 mb-3 font-weight-normal lead">{{ group.group_name }}</h1>
+        <small class="text-muted">{{ group.group_id }}</small>
+        <div class="form-group mt-3">
+          {% if user|group_petition:group.id %}
+          <button type="submit" class="group-request btn btn-light w-25  mx-2" data-approval=1 data-group="{{group.id}}">申請取り消し</button>
+           {% else %}
+          <button type="submit"  class="group-request btn btn-light w-25  mx-2" data-approval=0 data-group="{{group.id}}">申請する</button>
+          {% endif %}
+          </div>
+        </form>
+               </div>
+          </div><!-- /.col-lg-4 -->
+    </div>
+        {% if forloop.counter|divisibleby:"2" or forloop.last %}
+        </div>
+         {% endif %}
+	{% endfor %}
+{% endblock %}
+
+
+{% block extrajs %}
+  <script src="{% static 'commons/js/AjaxPostCokie.js' %}"></script>
+  <!--<script src="{% static 'groups/js/group_request.js' %}"></script>-->
+<script>
+  $('.group-request').on('click',function(e){
+        e.preventDefault();
+        let $click_button = $(this)
+        let $approval = $click_button.attr('data-approval');
+        let $group = $click_button.attr('data-group');
+
+            $.ajax({
+                'url': "{% url 'groups:ajax_post_add' %}",
+                'type': 'POST',
+                'data': {
+                    'group': $group,
+                    'approval':$approval,
+                     csrfmiddlewaretoken: '{{ csrf_token }}',
+                },
+                'dataType': 'json',
+                beforeSend: function(xhr, settings) {
+            // ボタンを無効化し、二重送信を防止
+            $(this).attr('disabled', true);
+            }
+          }).then(
+    // 1つめは通信成功時のコールバック
+    function (data) {
+          if(data.flag == 0){
+                 $click_button.attr("data-approval", 0);
+                 $click_button.text('申請する');
+              }else if(data.flag == 1){
+                 $click_button.attr("data-approval", 1);
+                 $click_button.text('申請取り消し');
+              }else{
+                alert('申請できるのは１つのみです。');
+              }
+        $(this).removeAttr('disabled');
+    },
+    // 2つめは通信失敗時のコールバック
+    function () {
+        alert("なんらかの問題が発生しました。");
+  });
+        });
+  </script>
+
+{% endblock %}

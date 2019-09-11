@@ -1,0 +1,72 @@
+{% load static %}
+{% load person_extras %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load widget_tweaks %}
+
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <meta name="description" content="部活がこんなに楽しく!?●●を使って部活を快適に楽しもう！">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'commons/css/base.css' %}">
+    {% block link %}{% endblock %}
+    </head>
+
+<body>
+
+<header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'person:home' %}">APASN{% block headertitle %}{% endblock %}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'person:myaccount' username=user.username %}">アカウント</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'schedules:month' %}">カレンダー</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'records:recordcreate' %}">レコード</a>
+
+        </li>
+
+        <li class="nav-item">
+           {% if user|belong_judgment %}
+          <a class="nav-link" href="{% url 'person:members' %}">メンバー</a>
+           {% else %}
+          <a class="nav-link" href="{% url 'groups:group_list' %}">グループ</a>
+          {% endif %}
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+<div class="container content mb-5" role="main">
+{% block content %}{% endblock %}
+</div>
+
+
+<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <div class=" text-center">
+      <small>© 2019 person</small>
+    </div>
+  </footer>
+{% block extrajs %}{% endblock %}
+
+</body>
+</html>

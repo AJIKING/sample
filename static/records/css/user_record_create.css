@@ -1,0 +1,15 @@
+.datepicker-days th.dow:first-child,
+    .datepicker-days td:first-child {
+        color: #f00;
+    }
+    .datepicker-days th.dow:last-child,
+    .datepicker-days td:last-child {
+        color: #00f;
+    }
+.form-group{
+  max-width: 550px;
+  width:100%;
+  margin: 0 auto;
+}
+
+
