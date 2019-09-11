@@ -1,5 +1,2 @@
 # person_project
-
->開発中 
-# portfolio
-# portfolio
+python generate_secretkey_setting.py > local_settings.py
